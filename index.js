@@ -1,31 +1,34 @@
 import express from "express";
 // import { urlencoded } from "body-parser";
-import { connect } from "mongoose";
+import mongoose from "mongoose";
 import {  test } from "./database/Task.js";
+import dotenv from "dotenv";
 
+const defaultDB = "ExTodo";
+const PORT = process.env.PORT || 3000
+dotenv.config()
 
-// const PORT = 3000;
-const PORT = process.env.PORT || 3000;
+const app = express()
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DB_CONNECT_URL+defaultDB+process.env.DB_CONNECT_OPTION);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+// console.log(process.env.DB_CONNECT_URL+defaultDB+process.env.DB_CONNECT_OPTION)
+}
 
-const app = express();
-
-// app.use(static(path.joing))
-app.set('view engine', 'jsx');
-
-// app.use(urlencoded({extended: true}));
-// app.use(static("public"));
-
-const mongo = connect("mongodb+srv://bfkp23:Cr6xLVbbFKP7CcT@cluster0.x9tdwdh.mongodb.net/ExTodo?retryWrites=true&w=majority",{useNewUrlParser: true},()=>{
-    console.log("Connected to MongoDB Atlas.");
-    test();
+//Routes go here
+app.all('*', (req,res) => {
+    res.json({"every thing":"is awesome"})
 })
 
-// app.get('/',(res,req) => {
-    
-// })
-
-app.listen(PORT,()=>{
-    console.log("Listening to port: 3000...");
-    
+//Connect to the database before listening
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("listening for requests");
+    })
 })
 
