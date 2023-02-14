@@ -1,18 +1,24 @@
 import express from "express";
-// import { urlencoded } from "body-parser";
+// import * as bodyParer from "body-parser"
 import mongoose from "mongoose";
-import {  test } from "./database/Task.js";
+// import {  test } from "./database/Task.js";
 import dotenv from "dotenv";
+import { router } from "./routes/routes.js";
 
-const defaultDB = "ExTodo";
-const PORT = process.env.PORT || 3000
+
 dotenv.config()
+const defaultDB = "ExTodo";
+const mongoUrl = process.env.DB_CONNECT_URL + defaultDB + process.env.DB_CONNECT_OPTION;
+console.log(mongoUrl);
+const PORT = process.env.PORT || 3000
 
-const app = express()
+const app = express();
+app.use(express.urlencoded({extended: true}) );
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_CONNECT_URL+defaultDB+process.env.DB_CONNECT_OPTION);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    const conn = await mongoose.connect(mongoUrl);
+    console.log(`MongoDB Connected: ${conn.connection.host} \n url:${mongoUrl}`);
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -21,14 +27,17 @@ const connectDB = async () => {
 }
 
 //Routes go here
-app.all('*', (req,res) => {
-    res.json({"every thing":"is awesome"})
+
+app.get("/",(req,res) =>{
+  res.send("homepage");
 })
+
+app.use('/api',router);
 
 //Connect to the database before listening
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log("listening for requests");
+        console.log("Connected to DB");
     })
 })
 

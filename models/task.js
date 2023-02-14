@@ -9,14 +9,12 @@ const taskSchema = {
     ifComplete:{type:Boolean, default:false},
 }
 
-const Task = mongoose.model("Task",taskSchema);
+export const Task = mongoose.model("Task",taskSchema);
 
 const ListSchema = new Schema({
     name:String,
     tasks:[taskSchema]
 })
-
-
 
 export const List = mongoose.model("List",ListSchema);
 
@@ -32,5 +30,6 @@ export function test(){
         tasks:[task1],
     });
     HomeList.save();
+
     console.log("save success")
 }
