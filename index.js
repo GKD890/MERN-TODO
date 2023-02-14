@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // import {  test } from "./database/Task.js";
 import dotenv from "dotenv";
 import { router } from "./routes/routes.js";
-
+import cors from "cors";
 
 dotenv.config()
 const defaultDB = "ExTodo";
@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000
 
 const app = express();
 app.use(express.urlencoded({extended: true}) );
+app.use(cors());
 
 const connectDB = async () => {
   try {
@@ -23,7 +24,6 @@ const connectDB = async () => {
     console.log(error);
     process.exit(1);
   }
-// console.log(process.env.DB_CONNECT_URL+defaultDB+process.env.DB_CONNECT_OPTION)
 }
 
 //Routes go here

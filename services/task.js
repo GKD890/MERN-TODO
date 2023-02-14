@@ -16,7 +16,6 @@ export const getOneTask = async (listName) =>{
 export const updateOneTask = async (taskId,updateTask) => {
     console.log("Updating...")
     const q = await Task.findByIdAndUpdate({_id:taskId},updateTask,{new:true});
-    // console.log(`q: ${q}`)
     return q;
 }
 
