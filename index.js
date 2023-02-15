@@ -1,7 +1,5 @@
 import express from "express";
-// import * as bodyParer from "body-parser"
 import mongoose from "mongoose";
-// import {  test } from "./database/Task.js";
 import dotenv from "dotenv";
 import { router } from "./routes/routes.js";
 import cors from "cors";
@@ -9,11 +7,11 @@ import cors from "cors";
 dotenv.config()
 const defaultDB = "ExTodo";
 const mongoUrl = process.env.DB_CONNECT_URL + defaultDB + process.env.DB_CONNECT_OPTION;
-console.log(mongoUrl);
 const PORT = process.env.PORT || 3000
 
 const app = express();
 app.use(express.urlencoded({extended: true}) );
+
 app.use(cors());
 
 const connectDB = async () => {
@@ -29,7 +27,8 @@ const connectDB = async () => {
 //Routes go here
 
 app.get("/",(req,res) =>{
-  res.send("homepage");
+  
+  res.send(`homepage `);
 })
 
 app.use('/api',router);
