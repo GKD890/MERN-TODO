@@ -16,7 +16,10 @@ app.use(express.static("frontend/dist"));
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(mongoUrl);
+    const conn = mongoose.connect(mongoUrl,{
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
     console.log(`MongoURL: ${mongoUrl}`);
   } catch (error) {
@@ -34,7 +37,7 @@ app.get("/",(req,res) =>{
 app.use('/api',router);
 
 /* ---------------- Connect to the database before listening ---------------- */
-connectDB().then(() => {
+await connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Connected to DB at ${PORT}`);
     })
