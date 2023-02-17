@@ -16,7 +16,7 @@ app.use(express.static("frontend/dist"));
 
 const connectDB = async () => {
   try {
-    const conn = mongoose.connect(mongoUrl,{
+    const conn = await mongoose.connect(mongoUrl,{
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
