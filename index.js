@@ -18,6 +18,7 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(mongoUrl);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoURL: ${mongoUrl}`);
   } catch (error) {
     console.log(error);
     process.exit(1);
@@ -36,7 +37,6 @@ app.use('/api',router);
 connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Connected to DB at ${PORT}`);
-        console.log(`MongoURL ${mongoUrl}`);
     })
 })
 
