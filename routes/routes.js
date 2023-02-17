@@ -16,20 +16,23 @@ router.post("/home/list",async(req,res) =>{
 })
 
 router.post("/home/add",async(req,res) =>{
-    const newTask = req.body.newTask;
-    const tasks = await addOneTask(newTask);
+    console.log(`\n add method accessed`)
+    const newTaskTitle = req.body.title;
+    const tasks = await addOneTask(newTaskTitle);
     res.send(tasks);
 })
 
 router.post("/home/update" ,async(req,res) =>{
+    const listId = req.body.listId;
     const taskId = req.body.taskId;
     const updateTask = req.body.updateTask;
-    const tasks = await updateOneTask(taskId,updateTask);
+    const tasks = await updateOneTask(listId,taskId,updateTask);
     res.send(tasks);
 })
 router.post("/home/delete",async(req,res) =>{
+    const delListId = req.body.listId;
     const delTaskId = req.body.taskId;
-    const tasks = await delOneTask(delTaskId);
+    const tasks = await delOneTask(delListId,delTaskId);
     res.send(tasks);
 })
 
