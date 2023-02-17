@@ -35,7 +35,8 @@ app.use('/api',router);
 /* ---------------- Connect to the database before listening ---------------- */
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log(`Connected to DB at${PORT}`);
+        console.log(`Connected to DB at ${PORT}`);
+        console.log(`MongoURL ${mongoUrl}`);
     })
 })
 
