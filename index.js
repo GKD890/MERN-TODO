@@ -14,6 +14,17 @@ app.use(express.urlencoded({extended: true}) );
 app.use(cors());
 app.use(express.static("frontend/dist"));
 
+function setExpress() {
+
+  /* ----------------------------- Routes go here ----------------------------- */
+  app.get("/",(req,res) =>{
+    res.sendFile("frontend/dist/index.html")
+  })
+
+  app.use('/api',router);
+}
+
+mongoose.set('strictQuery', false);
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(mongoUrl,{
@@ -28,18 +39,13 @@ const connectDB = async () => {
   }
 }
 
-/* ----------------------------- Routes go here ----------------------------- */
 
-app.get("/",(req,res) =>{
-  res.sendFile("frontend/dist/index.html")
-})
-
-app.use('/api',router);
 
 /* ---------------- Connect to the database before listening ---------------- */
 await connectDB().then(() => {
     app.listen(PORT, () => {
         console.log(`Connected to DB at ${PORT}`);
+        setExpress();
     })
 })
 
