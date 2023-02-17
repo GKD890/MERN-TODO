@@ -2,7 +2,6 @@ import { Task, List } from "../models/task.js"
 
 export const addOneTask = async (taskTitle) => {
     console.log("Adding...\n");
-    let n;
     const newTask = new Task({
         title:taskTitle,
         date:Date.now(),
@@ -51,7 +50,7 @@ export const updateOneTask = async (listId,taskId,updateTask) => {
         {new: true }
         // arrayFilters:[{"elem._id":taskId}],
         );
-    console.log(`updating list: ${listId} -> task @ ${taskId} \n ${delTask}`)
+    console.log(`updating list: ${listId} -> task @ ${taskId} \n`)
 
     await Task.findByIdAndUpdate(taskId,{ $set: { title: updateTask.title ,ifComplete: updateTask.ifComplete, description: updateTask.description } });
 

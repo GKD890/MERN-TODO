@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 3000
 
 const app = express();
 app.use(express.urlencoded({extended: true}) );
-
 app.use(cors());
+app.use(express.static("frontend/dist"));
 
 const connectDB = async () => {
   try {
@@ -24,19 +24,18 @@ const connectDB = async () => {
   }
 }
 
-//Routes go here
+/* ----------------------------- Routes go here ----------------------------- */
 
 app.get("/",(req,res) =>{
-  
-  res.send(`homepage `);
+  res.sendFile("frontend/dist/index.html")
 })
 
 app.use('/api',router);
 
-//Connect to the database before listening
+/* ---------------- Connect to the database before listening ---------------- */
 connectDB().then(() => {
     app.listen(PORT, () => {
-        console.log("Connected to DB");
+        console.log(`Connected to DB at${PORT}`);
     })
 })
 
